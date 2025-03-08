@@ -4,8 +4,9 @@ pipeline {
     stages {
         stage('code') {
             steps {
-                sh "sudo yum install git -y"
-                git url: "https://github.com/prathamesh633/django-notes-app.git", branch: "main"
+                script{
+                    gitcheckout("https://github.com/prathamesh633/django-notes-app.git", "main")
+                }
                 echo "code clone - DONE"
             }
         }
