@@ -1,11 +1,13 @@
+@Library{"shared"} _
 pipeline {
     agent {label "slave"}
 
     stages {
         stage('code') {
             steps {
-                sh "sudo yum install git -y"
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/prathamesh633/django-notes-app.git/']])
+                script{
+                    code-clone()
+                }
                 echo "code clone - DONE"
             }
         }
@@ -24,14 +26,17 @@ pipeline {
         }
         stage("deploy"){
             steps{
-                sh "sudo docker-compose down"
-                sh "sudo docker-compose up -d"
+                script{
+                    docker-compose()
+                }
                 echo " Deployment - DONE"
             }
         }
         stage("clean-up"){
             steps{
-                sh "sudo docker system prune -a -f"
+                script{
+                    cleanup()
+                }
                 echo " Cleaning - DONE"
             }
         }
