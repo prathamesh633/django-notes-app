@@ -1,14 +1,11 @@
-@Library("shared") _
 pipeline {
     agent {label "slave"}
 
     stages {
         stage('code') {
             steps {
-                 sh "sudo yum install git -y"
-                script{
-                    code-clone("https://github.com/prathamesh633/django-notes-app.git", "main")
-                }
+                sh "sudo yum install git -y"
+                git url: "https://github.com/prathamesh633/django-notes-app.git", branch: "main"
                 echo "code clone - DONE"
             }
         }
