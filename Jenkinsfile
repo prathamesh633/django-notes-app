@@ -24,17 +24,13 @@ pipeline {
         }
         stage("deploy"){
             steps{
-                script{
-                    docker-compose()
-                }
+                sh "docker-compose down && docker-compose up -d"
                 echo " Deployment - DONE"
             }
         }
         stage("clean-up"){
             steps{
-                script{
-                    cleanup()
-                }
+                sh "sudo docker system prune -a -f"
                 echo " Cleaning - DONE"
             }
         }
