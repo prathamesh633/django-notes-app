@@ -6,7 +6,7 @@ pipeline {
         stage('code') {
             steps {
                 script{
-                    code-clone(https://github.com/prathamesh633/django-notes-app.git, main)
+                    code-clone("https://github.com/prathamesh633/django-notes-app.git", "main")
                 }
                 echo "code clone - DONE"
             }
