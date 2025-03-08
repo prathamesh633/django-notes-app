@@ -1,8 +1,8 @@
 version: "3.8"
 
 services:
- notes-app:
-  build:
-   context: .
+  notes-app:
+    build:
+      context: .
     ports:
-    - "8000:8000"   
+      - "8000:8000"
