@@ -1,15 +1,7 @@
-@Library("shared") _
 pipeline {
     agent {label "slave"}
 
     stages {
-        stage{
-            steps{
-                script{
-                    hello()
-                }
-            }
-        }
         stage('code') {
             steps {
                 sh "sudo yum install git -y"
