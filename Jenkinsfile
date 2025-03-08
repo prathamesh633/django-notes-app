@@ -1,29 +1,38 @@
-@Library('Shared')_
-pipeline{
-    agent { label 'dev-server'}
-    
-    stages{
-        stage("Code clone"){
-            steps{
-                sh "whoami"
-            clone("https://github.com/LondheShubham153/django-notes-app.git","main")
+pipeline {
+    agent {label "slave"}
+
+    stages {
+        stage('code') {
+            steps {
+                sh "sudo yum install git -y"
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/prathamesh633/django-notes-app.git/']])
+                echo "code clone - DONE"
             }
         }
-        stage("Code Build"){
+        stage("build"){
             steps{
-            dockerbuild("notes-app","latest")
+                sh """ 
+                """
+                echo "code clone - DONE"
             }
         }
-        stage("Push to DockerHub"){
+        stage("test"){
             steps{
-                dockerpush("dockerHubCreds","notes-app","latest")
+                sh ""
+                echo "Testing - DONE"
             }
         }
-        stage("Deploy"){
+        stage("deploy"){
             steps{
-                deploy()
+                sh "sudo docker-compose up -d"
+                echo " Deployment - DONE"
             }
         }
-        
+        stage("clean-up"){
+            steps{
+                sh "sudo docker system prune -a -f"
+                echo " Cleaning - DONE"
+            }
+        }
     }
 }
